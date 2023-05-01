@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Grade Calculator</title>
+</head>
+<body>
+	<h1>Grade Calculator</h1>
+	<p>Enter your marks below to calculate your grade:</p>
+	<label for="maths">Maths:</label>
+	<input type="number" id="maths"><br><br>
+	<label for="science">Science:</label>
+	<input type="number" id="science"><br><br>
+	<label for="english">English:</label>
+	<input type="number" id="english"><br><br>
+	<button id="calculate">Calculate</button><br><br>
+	<p>Your grade is: <span id="grade"></span></p>
+
+	<script>
+		// Define a function that returns another function
+		function createGradeCalculator() {
+			var gradeTable = {
+				'A+': { min: 90, max: 100 },
+				'A': { min: 80, max: 89 },
+				'B+': { min: 70, max: 79 },
+				'B': { min: 60, max: 69 },
+				'C': { min: 50, max: 59 },
+				'D': { min: 40, max: 49 },
+				'F': { min: 0, max: 39 }
+			};
+			return function() {
+				var maths = parseFloat(document.getElementById('maths').value);
+				var science = parseFloat(document.getElementById('science').value);
+				var english = parseFloat(document.getElementById('english').value);
+				var totalMarks = maths + science + english;
+				var percentage = totalMarks / 3;
+				for (var grade in gradeTable) {
+					if (percentage >= gradeTable[grade].min && percentage <= gradeTable[grade].max) {
+						document.getElementById('grade').innerHTML = grade;
+						break;
+					}
+				}
+			}
+		}
+
+		// Call the createGradeCalculator function to get the gradeCalculator function
+		var gradeCalculator = createGradeCalculator();
+
+		// Add an event listener to the button that calls the gradeCalculator function
+		document.getElementById('calculate').addEventListener('click', gradeCalculator);
+	</script>
+</body>
+</html>
